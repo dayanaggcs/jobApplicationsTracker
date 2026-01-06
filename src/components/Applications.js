@@ -1,4 +1,6 @@
 import { CiCirclePlus } from "react-icons/ci";
+import { MdModeEditOutline } from "react-icons/md";
+import { FaTrashAlt } from "react-icons/fa";
 import React, { useState } from "react";
 export const Applications = () => {
   const [openAddApplication, setOpenAddApplication] = useState(false);
@@ -58,6 +60,8 @@ export const Applications = () => {
             <th>Position</th>
             <th>Date Applied</th>
             <th>Status</th>
+            <th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -68,6 +72,12 @@ export const Applications = () => {
               <td>{app.date}</td>
               <td>
                 <span>{app.status}</span>
+              </td>
+              <td>
+                <MdModeEditOutline size={20} style={{ cursor: "pointer" }} />
+              </td>
+              <td>
+                <FaTrashAlt size={18} style={{ cursor: "pointer" }} />
               </td>
             </tr>
           ))}
