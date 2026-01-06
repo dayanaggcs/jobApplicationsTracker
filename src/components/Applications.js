@@ -42,17 +42,7 @@ export const Applications = () => {
               <td>{app.position}</td>
               <td>{app.date}</td>
               <td>
-                <span
-                  className={`badge badge-${
-                    app.status === "Applied"
-                      ? "primary"
-                      : app.status === "Interview"
-                      ? "success"
-                      : "danger"
-                  }`}
-                >
-                  {app.status}
-                </span>
+                <span>{app.status}</span>
               </td>
             </tr>
           ))}
