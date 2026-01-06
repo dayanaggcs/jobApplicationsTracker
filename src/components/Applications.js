@@ -1,4 +1,8 @@
+import { CiCirclePlus } from "react-icons/ci";
+import React, { useState } from "react";
 export const Applications = () => {
+  const [openAddApplication, setOpenAddApplication] = useState(false);
+
   const applications = [
     {
       id: 1,
@@ -23,9 +27,30 @@ export const Applications = () => {
     },
   ];
 
+  const handleClickAddApplication = () => {
+    setOpenAddApplication(true);
+  };
+
   return (
     <div className="container mt-5">
-      <h1>Applications</h1>
+      <div className="d-flex align-items-center mb-3">
+        <div className="d-flex align-items-center">
+          <h3 className="mb-0">Applications</h3>
+          <CiCirclePlus
+            className="ms-2"
+            size={28}
+            onClick={handleClickAddApplication}
+          />
+        </div>
+        <div className="ms-auto">
+          <input
+            type="text"
+            className="form-control"
+            style={{ width: "20rem", maxWidth: "600px" }}
+            placeholder="Search by company, position or status..."
+          />
+        </div>
+      </div>
       <table className="table table-striped table-hover">
         <thead className="table-dark">
           <tr>
