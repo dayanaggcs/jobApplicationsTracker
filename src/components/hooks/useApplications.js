@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 // Custom hook for managing job applications data
 const useApplications = () => {
   // State for the filtered/current applications list
@@ -8,8 +8,7 @@ const useApplications = () => {
   // State to track loading status during data fetch
   const [loading, setLoading] = useState(false);
 
-  const [editStatus, setEditStatus] = useState(false);
-  const [editStatusId, setEditStatusId] = useState(null);
+  const [sortAsc, setSortAsc] = useState(true);
 
   // Fetch applications data (simulated with mock data and timeout)
   const fetchApplications = () => {
@@ -48,6 +47,19 @@ const useApplications = () => {
     }, 500);
   };
 
+  // Return sorted applications using useMemo
+  const sortedApplications = useMemo(() => {
+    if (!applicationsList || applicationsList.length === 0) return [];
+
+    return [...applicationsList].sort((a, b) => {
+      if (sortAsc) {
+        return new Date(a.date) - new Date(b.date);
+      } else {
+        return new Date(b.date) - new Date(a.date);
+      }
+    });
+  }, [applicationsList, sortAsc]);
+
   // Fetch applications on component mount
   useEffect(() => {
     fetchApplications();
@@ -60,6 +72,9 @@ const useApplications = () => {
     loading,
     refetch: fetchApplications,
     setApplicationsList,
+    sortAsc,
+    toggleSort: () => setSortAsc(!sortAsc),
+    sortedApplications,
     // helper to add a new application and keep both lists in sync
     addApplication: (application) => {
       const newApp = {
@@ -79,13 +94,6 @@ const useApplications = () => {
       setApplicationsList(updatedList);
       setOriginalList(updatedList);
     },
-    // updateApplicationStatus: (applicationId, newStatus) => {
-    //   const updatedList = applicationsList.map((app) =>
-    //     app.id === applicationId ? { ...app, status: newStatus } : app
-    //   );
-    //   setApplicationsList(updatedList);
-    //   setOriginalList(updatedList);
-    // },
   };
 };
 

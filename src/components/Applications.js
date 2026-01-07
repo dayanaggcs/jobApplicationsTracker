@@ -312,8 +312,11 @@ export const ApplicationsPage = () => {
     applicationsList,
     loading,
     refetch,
+    sortAsc,
+    toggleSort,
     addApplication,
     deleteApplication,
+    sortedApplications,
   } = useApplications();
   const applicationModal = useModal(false, {
     company: "",
@@ -465,21 +468,21 @@ export const ApplicationsPage = () => {
             <th>Position</th>
             <th>
               Date Applied
-              {/* {sortAsc ? (
+              {sortAsc ? (
                 <GoSortAsc
                   className="ms-1"
                   size={16}
                   color="white"
-                  onClick={() => setSortAsc(false)}
+                  onClick={toggleSort}
                 />
               ) : (
                 <GoSortDesc
                   className="ms-1"
                   size={16}
                   color="white"
-                  onClick={() => setSortAsc(true)}
+                  onClick={toggleSort}
                 />
-              )} */}
+              )}
             </th>
             <th>Status</th>
             <th></th>
@@ -487,7 +490,7 @@ export const ApplicationsPage = () => {
           </tr>
         </thead>
         <tbody>
-          {applicationsList.map((app) => (
+          {sortedApplications.map((app) => (
             <tr key={app.id}>
               <td>{app.company}</td>
               <td>{app.position}</td>
@@ -628,8 +631,6 @@ export const ApplicationsPage = () => {
                     !applicationModal.payload?.status
                   }
                   onClick={() => {
-                    // Add application via the shared hook and close modal
-                    console.log("Payload:", applicationModal.payload);
                     addApplication(applicationModal.payload);
                     applicationModal.close();
                   }}
