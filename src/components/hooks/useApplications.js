@@ -10,6 +10,8 @@ const useApplications = () => {
 
   const [sortAsc, setSortAsc] = useState(true);
 
+  const [statusId, setStatusId] = useState(null);
+
   // Fetch applications data (simulated with mock data and timeout)
   const fetchApplications = () => {
     setLoading(true);
@@ -73,6 +75,7 @@ const useApplications = () => {
     refetch: fetchApplications,
     setApplicationsList,
     sortAsc,
+    statusId,
     toggleSort: () => setSortAsc(!sortAsc),
     sortedApplications,
     // helper to add a new application and keep both lists in sync
@@ -93,6 +96,30 @@ const useApplications = () => {
       );
       setApplicationsList(updatedList);
       setOriginalList(updatedList);
+    },
+    setStatusId: (id) => {
+      setStatusId(id);
+    },
+    updateApplication: (applicationId, updatedFields) => {
+      const updatedList = applicationsList.map((app) =>
+        app.id === applicationId ? { ...app, ...updatedFields } : app
+      );
+      setApplicationsList(updatedList);
+      setOriginalList(updatedList);
+    },
+    searchOnTable: (e) => {
+      const query = e.target.value.toLowerCase();
+      if (!query) {
+        setApplicationsList(originalList);
+        return;
+      }
+      const filteredList = originalList.filter(
+        (app) =>
+          app.company.toLowerCase().includes(query) ||
+          app.position.toLowerCase().includes(query) ||
+          app.status.toLowerCase().includes(query)
+      );
+      setApplicationsList(filteredList);
     },
   };
 };

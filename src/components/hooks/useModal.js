@@ -14,6 +14,7 @@ const useModal = (initialIsOpen = false, initialPayload = null) => {
   };
 
   const close = () => {
+    console.log("Closing modal");
     setIsOpen(false);
   };
 
