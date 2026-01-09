@@ -8,13 +8,11 @@ const useModal = (initialIsOpen = false, initialPayload = null) => {
 
   // open can optionally accept a payload to set when opening
   const open = (data) => {
-    console.log("Opening modal with data:", data);
     if (data !== undefined) setPayload(data);
     setIsOpen(true);
   };
 
   const close = () => {
-    console.log("Closing modal");
     setIsOpen(false);
   };
 
